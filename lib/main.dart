@@ -1,0 +1,66 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unused_import, prefer_void_to_null, await_only_futures, unused_local_variable, avoid_print, prefer_typing_uninitialized_variables, unnecessary_brace_in_string_interps, unnecessary_null_comparison, avoid_web_libraries_in_flutter, depend_on_referenced_packages, unnecessary_import
+
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:foodapp/Starter_Screen/ClientScreenAll/ClientOrderMenu.dart';
+import 'package:foodapp/Starter_Screen/ClientScreenAll/Client_FoodOrder.dart';
+import 'package:foodapp/Starter_Screen/RestaurentScreenAll/RestAddFoodmenu.dart';
+import 'package:foodapp/Starter_Screen/RestaurentScreenAll/main_RestaurantScreen.dart';
+import 'package:foodapp/TestCode/Test.dart';
+import 'package:foodapp/register_page.dart';
+import 'Starter_Screen/ClientScreenAll/ClientScreen.dart';
+import 'package:foodapp/AccountUser.dart';
+import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
+import 'package:foodapp/models/user_models.dart';
+import 'package:foodapp/HomePage.dart';
+
+var app;
+Future<Null> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp().then((value) async {
+    await FirebaseAuth.instance.authStateChanges().listen((event) async {
+      if (event != null) {
+        print('######[Condition Success]####### Data in event = ${event}');
+        String uid = event.uid;
+        await FirebaseFirestore.instance
+            .collection('user')
+            .doc(uid)
+            .snapshots()
+            .listen((event) {
+          print('######[Login]####### Data in event = ${event.data()}');
+          app = Client_Menu();
+          UserModel model = UserModel.fromMap(event.data()!);
+          print("#############Checking ${model.date} | ${event.data()}");
+        });
+      } else {
+        app = HomePage();
+        print(
+            "###[Cann't Found ID] ||||### System Loading... FirstScreen = ${app}");
+      }
+      print("4.####[Can't Find UserID] : ${app}");
+      runApp(MyApp());
+    });
+  });
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
+    );
+  }
+}
