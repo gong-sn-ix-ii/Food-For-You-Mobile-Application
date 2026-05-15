@@ -335,17 +335,3 @@ Made with 🧡 by [Kitsada Khamnuan](https://gong-ix-ii-dev.com)
 </div>
 
 ---
-
-> ### 📌 หมายเหตุการ Setup (ลบ section นี้ก่อน commit จริง)
->
-> รูปภาพอ้างอิงจาก `docs/screenshots/1.webp` ถึง `17.webp` (รวม `10_1.webp` ด้วย — รวม 18 ไฟล์)
->
-> ก่อน push ให้ก๊อปรูปทั้งหมดจาก Portfolio repo มาวางไว้ก่อน:
->
-> ```
-> จาก: Portfolio/src/assets/images/projects/FoodForYou/{1-17}.webp + 10_1.webp
-> ไปยัง: Food-For-You-Mobile-Application/docs/screenshots/{1-17}.webp + 10_1.webp
-> ```
->
-> **ทางเลือก:** เปลี่ยน `docs/screenshots/N.webp` เป็น raw URL ของ Portfolio:
-> `https://raw.githubusercontent.com/gong-sn-ix-ii/Portfolio/main/src/assets/images/projects/FoodForYou/N.webp`
